@@ -98,7 +98,7 @@ public class HoodieJavaApp {
     // Spark session setup..
     SparkSession spark = SparkSession.builder().appName("Hoodie Spark APP")
         .config("spark.serializer",
-            "org.apache.spark.serializer.KryoSerializer").master("local[1]")
+            "org.apache.spark.serializer.KryoSerializer").master("yarn")
         .getOrCreate();
     JavaSparkContext jssc = new JavaSparkContext(spark.sparkContext());
     FileSystem fs = FileSystem.get(jssc.hadoopConfiguration());

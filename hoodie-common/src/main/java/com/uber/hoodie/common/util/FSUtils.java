@@ -60,6 +60,14 @@ public class FSUtils {
   private static final String HOODIE_ENV_PROPS_PREFIX = "HOODIE_ENV_";
 
   public static Configuration prepareHadoopConf(Configuration conf) {
+    Configuration hadoopConf = new Configuration();
+    File hadoopConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "core-site.xml");
+    File hdfsConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "hdfs-site.xml");
+    Path hadoopPath = new Path(hadoopConfFile.getAbsolutePath());
+    Path hdfsPath = new Path(hdfsConfFile.getAbsolutePath());
+    hadoopConf.addResource(hadoopPath);
+    hadoopConf.addResource(hdfsPath);
+    conf = hadoopConf;
     conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
     conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
 

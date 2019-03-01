@@ -55,6 +55,8 @@ import com.uber.hoodie.utilities.schema.SchemaProvider;
 import com.uber.hoodie.utilities.sources.InputBatch;
 import com.uber.hoodie.utilities.sources.JsonDFSSource;
 import com.uber.hoodie.utilities.transform.Transformer;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -151,7 +153,15 @@ public class HoodieDeltaStreamer implements Serializable {
     this.cfg = cfg;
     this.jssc = jssc;
     this.sparkSession = SparkSession.builder().config(jssc.getConf()).getOrCreate();
-    this.fs = FSUtils.getFs(cfg.targetBasePath, jssc.hadoopConfiguration());
+    Configuration hadoopConf = new Configuration();
+    File hadoopConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "core-site.xml");
+    File hdfsConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "hdfs-site.xml");
+    Path hadoopPath = new Path(hadoopConfFile.getAbsolutePath());
+    Path hdfsPath = new Path(hdfsConfFile.getAbsolutePath());
+    hadoopConf.addResource(hadoopPath);
+    hadoopConf.addResource(hdfsPath);
+    log.info("config1:" + hadoopConf);
+    this.fs = FSUtils.getFs(cfg.targetBasePath, hadoopConf);
 
     if (fs.exists(new Path(cfg.targetBasePath))) {
       HoodieTableMetaClient meta = new HoodieTableMetaClient(fs.getConf(), cfg.targetBasePath);
@@ -175,8 +185,15 @@ public class HoodieDeltaStreamer implements Serializable {
   }
 
   private static HiveConf getDefaultHiveConf(Configuration cfg) {
+    Configuration hadoopConf = new Configuration();
+    File hadoopConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "core-site.xml");
+    File hdfsConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "hdfs-site.xml");
+    Path hadoopPath = new Path(hadoopConfFile.getAbsolutePath());
+    Path hdfsPath = new Path(hdfsConfFile.getAbsolutePath());
+    hadoopConf.addResource(hadoopPath);
+    hadoopConf.addResource(hdfsPath);
     HiveConf hiveConf = new HiveConf();
-    hiveConf.addResource(cfg);
+    hiveConf.addResource(hadoopConf);
     return hiveConf;
   }
 
@@ -199,7 +216,15 @@ public class HoodieDeltaStreamer implements Serializable {
         }
       }
     } else {
-      HoodieTableMetaClient.initTableType(jssc.hadoopConfiguration(), cfg.targetBasePath,
+      Configuration hadoopConf = new Configuration();
+      File hadoopConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "core-site.xml");
+      File hdfsConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "hdfs-site.xml");
+      Path hadoopPath = new Path(hadoopConfFile.getAbsolutePath());
+      Path hdfsPath = new Path(hdfsConfFile.getAbsolutePath());
+      hadoopConf.addResource(hadoopPath);
+      hadoopConf.addResource(hdfsPath);
+      log.info("config1:" + hadoopConf);
+      HoodieTableMetaClient.initTableType(hadoopConf, cfg.targetBasePath,
           cfg.storageType, cfg.targetTableName, "archived");
     }
     log.info("Checkpoint to resume from : " + resumeCheckpointStr);
@@ -424,13 +449,14 @@ public class HoodieDeltaStreamer implements Serializable {
     public Boolean enableHiveSync = false;
 
     @Parameter(names = {"--spark-master"}, description = "spark master to use.")
-    public String sparkMaster = "local[2]";
+    public String sparkMaster = "yarn";
 
     @Parameter(names = {"--help", "-h"}, help = true)
     public Boolean help = false;
   }
 
   public static void main(String[] args) throws Exception {
+    log.info("blaaab blaaaaaaa");
     final Config cfg = new Config();
     JCommander cmd = new JCommander(cfg, args);
     if (cfg.help || args.length == 0) {
@@ -439,6 +465,15 @@ public class HoodieDeltaStreamer implements Serializable {
     }
 
     JavaSparkContext jssc = UtilHelpers.buildSparkContext("delta-streamer-" + cfg.targetTableName, cfg.sparkMaster);
+    Configuration hadoopConf = new Configuration();
+    File hadoopConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "core-site.xml");
+    File hdfsConfFile = new File("/srv/hops/hadoop/etc/hadoop/", "hdfs-site.xml");
+    Path hadoopPath = new Path(hadoopConfFile.getAbsolutePath());
+    Path hdfsPath = new Path(hdfsConfFile.getAbsolutePath());
+    hadoopConf.addResource(hadoopPath);
+    hadoopConf.addResource(hdfsPath);
+    log.info("config1:" + hadoopConf);
+    log.info("config2:" + jssc.hadoopConfiguration().toString());
     new HoodieDeltaStreamer(cfg, jssc).sync();
   }
 
