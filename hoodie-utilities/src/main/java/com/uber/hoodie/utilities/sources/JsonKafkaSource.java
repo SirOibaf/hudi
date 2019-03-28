@@ -22,15 +22,23 @@ import com.uber.hoodie.common.util.TypedProperties;
 import com.uber.hoodie.utilities.schema.SchemaProvider;
 import com.uber.hoodie.utilities.sources.helpers.KafkaOffsetGen;
 import com.uber.hoodie.utilities.sources.helpers.KafkaOffsetGen.CheckpointUtils;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
-import kafka.serializer.StringDecoder;
+//import kafka.serializer.StringDecoder;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.serialization.ByteArrayDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.streaming.kafka.KafkaUtils;
-import org.apache.spark.streaming.kafka.OffsetRange;
+import org.apache.spark.streaming.kafka010.KafkaUtils;
+import org.apache.spark.streaming.kafka010.LocationStrategies;
+import org.apache.spark.streaming.kafka010.OffsetRange;
+import org.json.JSONObject;
 
 /**
  * Read json kafka data
@@ -45,6 +53,7 @@ public class JsonKafkaSource extends JsonSource {
       SchemaProvider schemaProvider) {
     super(properties, sparkContext, sparkSession, schemaProvider);
     offsetGen = new KafkaOffsetGen(properties);
+    log.info("Source class is ---------");
   }
 
   @Override
@@ -61,8 +70,17 @@ public class JsonKafkaSource extends JsonSource {
     return new InputBatch<>(Optional.of(newDataRDD), CheckpointUtils.offsetsToStr(offsetRanges));
   }
 
-  private JavaRDD<String> toRDD(OffsetRange[] offsetRanges) {
+  /*private JavaRDD<String> toRDD(OffsetRange[] offsetRanges) {
     return KafkaUtils.createRDD(sparkContext, String.class, String.class, StringDecoder.class, StringDecoder.class,
         offsetGen.getKafkaParams(), offsetRanges).values();
+  } */
+
+  private JavaRDD<String> toRDD(OffsetRange[] offsetRanges) {
+    //return KafkaUtils.createRDD(sparkContext, String.class, String.class, StringDecoder.class, StringDecoder.class,
+    //offsetGen.getKafkaParams(), offsetRanges).values();
+
+     // return KafkaUtils.createRDD(sparkContext, offsetGen.getKafkaParams(), offsetRanges, LocationStrategies.PreferConsistent()).flatMap(s -> Arrays.asList(s.value().toString()).iterator());
+   return KafkaUtils.createRDD(sparkContext, offsetGen.getKafkaParams(), offsetRanges, LocationStrategies.PreferConsistent()).map( s -> s.value().toString());
+      //return KafkaUtils.createRDD(sparkContext, offsetGen.getKafkaParams(), offsetRanges, LocationStrategies.PreferConsistent()).map( s -> { JSONObject jsonObject= new JSONObject(s.value().toString()); return jsonObject.getString("volume"); });
   }
 }
