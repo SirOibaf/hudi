@@ -585,7 +585,7 @@ public class HoodieHiveClient {
     try {
       Table table = client.getTable(syncConfig.databaseName, syncConfig.tableName);
       table.putToParameters(HOODIE_LAST_COMMIT_TIME_SYNC, lastCommitSynced);
-      client.alter_table(syncConfig.databaseName, syncConfig.tableName, table, true);
+      client.alter_table(syncConfig.databaseName, syncConfig.tableName, table);
     } catch (Exception e) {
       throw new HoodieHiveSyncException(
           "Failed to get update last commit time synced to " + lastCommitSynced, e);
