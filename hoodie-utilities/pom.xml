@@ -92,34 +92,34 @@
                   <pattern>org.apache.commons.pool.</pattern>
                   <shadedPattern>com.uber.hoodie.org.apache.commons.pool.</shadedPattern>
                 </relocation>
-                <relocation>
-                  <pattern>org.apache.hive.jdbc.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hive.jdbc.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hadoop.hive.metastore.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.metastore.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hive.common.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hive.common.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hadoop.hive.common.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.common.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hadoop.hive.conf.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.conf.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hive.service.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hive.service.</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>org.apache.hadoop.hive.service.</pattern>
-                  <shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.service.</shadedPattern>
-                </relocation>
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hive.jdbc.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hive.jdbc.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hadoop.hive.metastore.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.metastore.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hive.common.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hive.common.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hadoop.hive.common.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.common.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hadoop.hive.conf.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.conf.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hive.service.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hive.service.</shadedPattern>-->
+                <!--</relocation>-->
+                <!--<relocation>-->
+                  <!--<pattern>org.apache.hadoop.hive.service.</pattern>-->
+                  <!--<shadedPattern>com.uber.hoodie.org.apache.hadoop_hive.service.</shadedPattern>-->
+                <!--</relocation>-->
               </relocations>
             </configuration>
           </execution>
