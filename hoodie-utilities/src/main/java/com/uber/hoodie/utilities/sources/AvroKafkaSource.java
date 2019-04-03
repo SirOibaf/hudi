@@ -45,25 +45,25 @@ public class AvroKafkaSource extends AvroSource {
   private final KafkaOffsetGen offsetGen;
 
   public AvroKafkaSource(TypedProperties props, JavaSparkContext sparkContext, SparkSession sparkSession,
-      SchemaProvider schemaProvider) {
+                         SchemaProvider schemaProvider) {
     super(props, sparkContext, sparkSession, schemaProvider);
     offsetGen = new KafkaOffsetGen(props);
   }
 
   @Override
   protected InputBatch<JavaRDD<GenericRecord>> fetchNewData(Optional<String> lastCheckpointStr,
-      long sourceLimit) {
+                                                            long sourceLimit) {
     OffsetRange[] offsetRanges = offsetGen.getNextOffsetRanges(lastCheckpointStr, sourceLimit);
     long totalNewMsgs = CheckpointUtils.totalNewMessages(offsetRanges);
     if (totalNewMsgs <= 0) {
       return new InputBatch<>(Optional.empty(),
-          lastCheckpointStr.isPresent() ? lastCheckpointStr.get() : "");
+              lastCheckpointStr.isPresent() ? lastCheckpointStr.get() : "");
     } else {
       log.info("About to read " + totalNewMsgs + " from Kafka for topic :" + offsetGen.getTopicName());
     }
     JavaRDD<GenericRecord> newDataRDD = toRDD(offsetRanges);
     return new InputBatch<>(Optional.of(newDataRDD),
-        KafkaOffsetGen.CheckpointUtils.offsetsToStr(offsetRanges));
+            KafkaOffsetGen.CheckpointUtils.offsetsToStr(offsetRanges));
   }
 
  /* private JavaRDD<GenericRecord> toRDD(OffsetRange[] offsetRanges) {
