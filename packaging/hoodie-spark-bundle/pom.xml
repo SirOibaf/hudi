@@ -96,6 +96,7 @@
                     <exclude>com.databricks.spark.**</exclude>
                     <exclude>org.apache.avro.**</exclude>
                     <exclude>org.apache.derby.**</exclude>
+                      <exclude>org.apache.parquet.**</exclude>
                     <exclude>org.apache.hadoop.**</exclude>
                     <!--<exclude>org.apache.hive.**</exclude>-->
                     <exclude>org.apache.logging.log4j.**</exclude>

@@ -5,6 +5,7 @@ import com.uber.hoodie.DataSourceUtils;
 import com.uber.hoodie.common.model.HoodieRecord;
 import com.uber.hoodie.common.util.TypedProperties;
 import com.uber.hoodie.common.util.collection.Pair;
+import com.uber.hoodie.hive.MultiPartKeysValueExtractor;
 import com.uber.hoodie.hive.SlashEncodedDayPartitionValueExtractor;
 import com.uber.hoodie.utilities.schema.SchemaProvider;
 import com.uber.hoodie.utilities.sources.helpers.IncrSourceHelper;
@@ -47,7 +48,9 @@ public class HoodieIncrSource extends RowSource {
     private static final String HOODIE_SRC_PARTITION_EXTRACTORCLASS =
         "hoodie.deltastreamer.source.hoodieincr.partition.extractor.class";
     private static final String DEFAULT_HOODIE_SRC_PARTITION_EXTRACTORCLASS =
-        SlashEncodedDayPartitionValueExtractor.class.getCanonicalName();
+            MultiPartKeysValueExtractor.class.getCanonicalName();
+    //private static final String DEFAULT_HOODIE_SRC_PARTITION_EXTRACTORCLASS =
+        //SlashEncodedDayPartitionValueExtractor.class.getCanonicalName();
 
     /**
      * {@value #READ_LATEST_INSTANT_ON_MISSING_CKPT} allows delta-streamer to incrementally fetch from latest committed

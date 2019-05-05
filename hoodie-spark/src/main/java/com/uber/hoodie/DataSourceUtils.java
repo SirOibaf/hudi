@@ -30,6 +30,7 @@ import com.uber.hoodie.exception.DatasetNotFoundException;
 import com.uber.hoodie.exception.HoodieException;
 import com.uber.hoodie.exception.HoodieNotSupportedException;
 import com.uber.hoodie.hive.HiveSyncConfig;
+import com.uber.hoodie.hive.MultiPartKeysValueExtractor;
 import com.uber.hoodie.hive.PartitionValueExtractor;
 import com.uber.hoodie.hive.SlashEncodedDayPartitionValueExtractor;
 import com.uber.hoodie.index.HoodieIndex;
@@ -205,8 +206,10 @@ public class DataSourceUtils {
     hiveSyncConfig.partitionFields =
         props.getStringList(DataSourceWriteOptions.HIVE_PARTITION_FIELDS_OPT_KEY(), ",",  new ArrayList<>());
     hiveSyncConfig.partitionValueExtractorClass =
-          props.getString(DataSourceWriteOptions.HIVE_PARTITION_EXTRACTOR_CLASS_OPT_KEY(),
-              SlashEncodedDayPartitionValueExtractor.class.getName());
+            props.getString(DataSourceWriteOptions.HIVE_PARTITION_EXTRACTOR_CLASS_OPT_KEY(),
+                    MultiPartKeysValueExtractor.class.getName());
+    // props.getString(DataSourceWriteOptions.HIVE_PARTITION_EXTRACTOR_CLASS_OPT_KEY(),
+      // SlashEncodedDayPartitionValueExtractor.class.getName());
     return hiveSyncConfig;
   }
 }

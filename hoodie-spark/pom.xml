@@ -126,7 +126,7 @@
           <skip>false</skip>
         </configuration>
       </plugin>
-      <plugin>
+     <!-- <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.3</version>
         <configuration>
@@ -140,8 +140,8 @@
               <goal>single</goal>
             </goals>
           </execution>
-        </executions>
-      </plugin>
+        </executios>
+      </plugin> -->
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>

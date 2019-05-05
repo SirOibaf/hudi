@@ -52,12 +52,15 @@ public class HiveSyncConfig implements Serializable {
       required = false)
   public List<String> partitionFields = new ArrayList<>();
 
-  @Parameter(names = "-partition-value-extractor", description = "Class which implements "
+  @Parameter(names = "--partition-value-extractor-class", description = "Class which implements "
       + "PartitionValueExtractor "
       + "to extract the partition "
       + "values from HDFS path")
-  public String partitionValueExtractorClass = SlashEncodedDayPartitionValueExtractor.class
-      .getName();
+ // public String partitionValueExtractorClass = SlashEncodedDayPartitionValueExtractor.class
+      //.getName();
+
+  public String partitionValueExtractorClass = MultiPartKeysValueExtractor.class
+          .getName();
 
   @Parameter(names = {
       "--assume-date-partitioning"}, description = "Assume standard yyyy/mm/dd partitioning, this"

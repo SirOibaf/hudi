@@ -46,7 +46,7 @@ public class MercifulJsonConverter {
 
   public GenericRecord convert(String json) throws IOException {
     try {
-        log.info("This is String to be parsed as JSON:>  " +json);
+        //log.info("This is String to be parsed as JSON:>  " +json);
         if(json.length() >=2 && json.charAt(0) == '"' && json.charAt(json.length()-1) == '"'){
             json = json.substring(1, json.length()-1);
             json = json.replaceAll("\\\\n|\\n|\\r|\n|\n\n", "");

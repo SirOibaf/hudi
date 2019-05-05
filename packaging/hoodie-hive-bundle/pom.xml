@@ -178,29 +178,29 @@
                    <pattern>org.apache.commons.</pattern>
                    <shadedPattern>com.uber.hoodie.org.apache.commons.</shadedPattern>
                  </relocation>
-                 <relocation>
-                   <pattern>parquet.column</pattern>
-                   <shadedPattern>com.uber.hoodie.parquet.column</shadedPattern>
-                 </relocation>
-                 <relocation>
-                   <pattern>parquet.format.</pattern>
-                   <shadedPattern>com.uber.hoodie.parquet.format.</shadedPattern>
-                 </relocation>
-                 <relocation>
-                   <pattern>parquet.hadoop.</pattern>
-                   <shadedPattern>com.uber.hoodie.parquet.hadoop.</shadedPattern>
-                 </relocation>
-                 <relocation>
-                   <pattern>parquet.schema.</pattern>
-                   <shadedPattern>com.uber.hoodie.parquet.schema.</shadedPattern>
-                 </relocation>
-              </relocations>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-              <artifactSet>
-                <excludes>
-                  <exclude>log4j:log4j</exclude>
-                  <exclude>org.apache.hadoop:*</exclude>
-                 <!-- <exclude>org.apache.hive:*</exclude>-->
+                <!-- <relocation>
+                    <pattern>parquet.column</pattern>
+                    <shadedPattern>com.uber.hoodie.parquet.column</shadedPattern>
+                  </relocation>
+                  <relocation>
+                     <pattern>parquet.format.</pattern>
+                     <shadedPattern>com.uber.hoodie.parquet.format.</shadedPattern>
+                   </relocation>
+                   <relocation>
+                     <pattern>parquet.hadoop.</pattern>
+                     <shadedPattern>com.uber.hoodie.parquet.hadoop.</shadedPattern>
+                   </relocation>
+                   <relocation>
+                     <pattern>parquet.schema.</pattern>
+                     <shadedPattern>com.uber.hoodie.parquet.schema.</shadedPattern>
+                   </relocation> -->
+               </relocations>
+               <createDependencyReducedPom>false</createDependencyReducedPom>
+               <artifactSet>
+                 <excludes>
+                   <exclude>log4j:log4j</exclude>
+                   <exclude>org.apache.hadoop:*</exclude>
+                  <!-- <exclude>org.apache.hive:*</exclude>-->
                   <exclude>org.apache.derby:derby</exclude>
                 </excludes>
               </artifactSet>
