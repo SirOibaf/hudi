@@ -126,7 +126,7 @@
     </dependency>
     <dependency>
       <groupId>${hive.groupid}</groupId>
-      <artifactId>hive-jdbc</artifactId>
+      <artifactId>hops-jdbc</artifactId>
       <version>${hive.version}</version>
       <exclusions>
 	<exclusion>
@@ -141,7 +141,7 @@
     </dependency>
     <dependency>
       <groupId>${hive.groupid}</groupId>
-      <artifactId>hive-metastore</artifactId>
+      <artifactId>hive-standalone-metastore</artifactId>
       <version>${hive.version}</version>
     </dependency>
     <dependency>

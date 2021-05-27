@@ -36,7 +36,6 @@
 
   <modules>
     <module>hudi-common</module>
-    <module>hudi-cli</module>
     <module>hudi-client</module>
     <module>hudi-hadoop-mr</module>
     <module>hudi-spark-datasource</module>
@@ -51,6 +50,7 @@
     <module>packaging/hudi-timeline-server-bundle</module>
 <!--    <module>docker/hoodie/hadoop</module>
     <module>hudi-integ-test</module>
+    <module>hudi-cli</module>
     <module>packaging/hudi-integ-test-bundle</module>  -->
     <module>hudi-examples</module>
     <module>hudi-flink</module>
@@ -101,7 +101,7 @@
     <hadoop.groupid>io.hops</hadoop.groupid>
     <hadoop.version>3.2.0.0-SNAPSHOT</hadoop.version>
     <hive.groupid>io.hops.hive</hive.groupid>
-    <hive.version>3.0.0.5</hive.version>
+    <hive.version>3.0.0.7</hive.version>
     <hive.exec.classifier>core</hive.exec.classifier>
     <metrics.version>4.1.1</metrics.version>
     <prometheus.version>0.8.0</prometheus.version>
@@ -131,8 +131,8 @@
     <skipITs>${skipTests}</skipITs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.basedir>${project.basedir}</main.basedir>
-    <spark.bundle.hive.scope>provided</spark.bundle.hive.scope>
-    <spark.bundle.hive.shade.prefix />
+    <spark.bundle.hive.scope>compile</spark.bundle.hive.scope>
+    <spark.bundle.hive.shade.prefix>io.hops.hudi.hive.</spark.bundle.hive.shade.prefix>
     <spark.bundle.avro.scope>compile</spark.bundle.avro.scope>
     <spark.bundle.spark.shade.prefix>io.hops.hudi.spark.</spark.bundle.spark.shade.prefix>
     <utilities.bundle.hive.scope>provided</utilities.bundle.hive.scope>
